@@ -1,4 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:sm_dialog/sm_dialog.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Awesome Dialog Example'),
+        title: const Text('SM Dialog Example'),
       ),
       body: Center(
         child: Container(
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 AnimatedButton(
                   text: 'Info Dialog fixed width and square buttons',
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.info,
                       borderSide: const BorderSide(
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 AnimatedButton(
                   text: 'Warning Dialog With Custom BTN Style',
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.warning,
                       headerAnimationLoop: false,
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 AnimatedButton(
                   text: 'Info Reverse Dialog Without buttons',
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.infoReverse,
                       headerAnimationLoop: true,
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Warning Dialog',
                   color: Colors.orange,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.warning,
                       headerAnimationLoop: false,
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Error Dialog',
                   color: Colors.red,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.error,
                       animType: AnimType.rightSlide,
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Question Dialog',
                   color: Colors.amber,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.question,
                       animType: AnimType.rightSlide,
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Success Dialog',
                   color: Colors.green,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       animType: AnimType.leftSlide,
                       headerAnimationLoop: false,
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'No Header Dialog',
                   color: Colors.cyan,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       headerAnimationLoop: false,
                       dialogType: DialogType.noHeader,
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Custom Body Dialog',
                   color: Colors.blueGrey,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       animType: AnimType.scale,
                       dialogType: DialogType.info,
@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Auto Hide Dialog',
                   color: Colors.purple,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       dialogType: DialogType.infoReverse,
                       animType: AnimType.scale,
@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Testing Dialog',
                   color: Colors.orange,
                   pressEvent: () {
-                    AwesomeDialog(
+                    SMDialog(
                       context: context,
                       keyboardAware: true,
                       dismissOnBackKeyPress: false,
@@ -296,8 +296,8 @@ class _HomePageState extends State<HomePage> {
                   text: 'Body with Input',
                   color: Colors.blueGrey,
                   pressEvent: () {
-                    late AwesomeDialog dialog;
-                    dialog = AwesomeDialog(
+                    late SMDialog dialog;
+                    dialog = SMDialog(
                       context: context,
                       animType: AnimType.scale,
                       dialogType: DialogType.info,
@@ -366,7 +366,7 @@ class _HomePageState extends State<HomePage> {
                 AnimatedButton(
                   text: 'Passing Data Back from Dialog',
                   pressEvent: () async {
-                    final dismissMode = await AwesomeDialog(
+                    final dismissMode = await SMDialog(
                       context: context,
                       dialogType: DialogType.noHeader,
                       buttonsBorderRadius: const BorderRadius.all(
@@ -387,7 +387,7 @@ class _HomePageState extends State<HomePage> {
                       onDismissCallback: (type) {
                         Navigator.of(context).pop(type);
                       },
-                      barrierColor: Colors.purple[900]?.withOpacity(0.54),
+                      barrierColor: Colors.purple[900]?.withValues(alpha: 0.54),
                     ).show();
 
                     ScaffoldMessenger.of(context).showSnackBar(

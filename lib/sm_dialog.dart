@@ -1,18 +1,18 @@
-import 'package:awesome_dialog/src/animated_button.dart';
-import 'package:awesome_dialog/src/anims/native_animations.dart';
-import 'package:awesome_dialog/src/header.dart';
-import 'package:awesome_dialog/src/vertical_stack_header_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sm_dialog/src/animated_button.dart';
+import 'package:sm_dialog/src/anims/native_animations.dart';
+import 'package:sm_dialog/src/header.dart';
+import 'package:sm_dialog/src/vertical_stack_header_dialog.dart';
 
 export 'src/animated_button.dart';
 export 'src/anims/native_animations.dart';
 export 'src/header.dart';
 
 ///Main class for creating a dialog
-class AwesomeDialog {
+class SMDialog {
   ///Constructor
-  AwesomeDialog({
+  SMDialog({
     required this.context,
     this.dialogType = DialogType.info,
     this.customHeader,
@@ -20,7 +20,6 @@ class AwesomeDialog {
     this.titleTextStyle,
     this.desc,
     this.descTextStyle,
-    this.descAlign,
     this.body,
     this.btnOk,
     this.btnCancel,
@@ -36,7 +35,7 @@ class AwesomeDialog {
     this.isDense = false,
     this.dismissOnTouchOutside = true,
     this.headerAnimationLoop = true,
-    this.alignment = Alignment.center,
+    this.alignment,
     this.animType = AnimType.scale,
     this.padding,
     this.useRootNavigator = false,
@@ -87,11 +86,6 @@ class AwesomeDialog {
   /// If not set, it will be the [DefaultTextStyle]
   final TextStyle? descTextStyle;
 
-  /// The [TextAlign] of the description
-  ///
-  /// If not set, it will be [TextAlign.center]
-  final TextAlign? descAlign;
-
   /// Create your own Widget for body, if this property is set title and description will be ignored.
   final Widget? body;
 
@@ -138,7 +132,7 @@ class AwesomeDialog {
   final BorderRadiusGeometry? dialogBorderRadius;
 
   /// Alignment of the Dialog
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
 
   /// Padding off inner content of Dialog
   final EdgeInsetsGeometry? padding;
@@ -243,7 +237,7 @@ class AwesomeDialog {
               dismiss();
             });
           }
-          return _buildDialog;
+          return buildDialog;
         },
         transitionDuration: transitionAnimationDuration,
         transitionBuilder: (
@@ -254,12 +248,9 @@ class AwesomeDialog {
         ) =>
             _showAnimation(animation, secondaryAnimation, child),
         barrierColor: barrierColor ?? const Color(0x80000000),
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       )..then<dynamic>(
-          (dynamic value) => _onDismissCallbackCalled
-              ? null
-              : onDismissCallback?.call(_dismissType),
+          (dynamic value) => _onDismissCallbackCalled ? null : onDismissCallback?.call(_dismissType),
         );
 
   /// Return the header of the dialog
@@ -270,14 +261,14 @@ class AwesomeDialog {
     if (dialogType == DialogType.noHeader) {
       return null;
     }
-    return AwesomeDialogHeader(
+    return SMDialogHeader(
       loop: headerAnimationLoop,
       dialogType: dialogType,
     );
   }
 
   /// Returns the body of the dialog
-  Widget get _buildDialog => WillPopScope(
+  Widget get buildDialog => WillPopScope(
         onWillPop: _onWillPop,
         child: _getDialogWidget(
           child: VerticalStackDialog(
@@ -289,7 +280,6 @@ class AwesomeDialog {
             titleStyle: titleTextStyle,
             desc: desc,
             descStyle: descTextStyle,
-            descAlign: descAlign,
             body: body,
             isDense: isDense,
             alignment: alignment,
@@ -298,8 +288,7 @@ class AwesomeDialog {
             padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
             bodyHeaderDistance: bodyHeaderDistance,
             btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
-            btnCancel: btnCancel ??
-                (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
+            btnCancel: btnCancel ?? (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
             showCloseIcon: showCloseIcon,
             onClose: () {
               _dismissType = DismissType.topIcon;
@@ -319,8 +308,7 @@ class AwesomeDialog {
             focusNode: FocusNode(),
             autofocus: true,
             onKey: (RawKeyEvent event) {
-              if (event.isKeyPressed(LogicalKeyboardKey.enter) ||
-                  event.isKeyPressed(LogicalKeyboardKey.numpadEnter)) {
+              if (event.isKeyPressed(LogicalKeyboardKey.enter) || event.isKeyPressed(LogicalKeyboardKey.numpadEnter)) {
                 if (btnOk == null && btnOkOnPress != null) {
                   _dismissType = DismissType.btnOk;
                   dismiss();
@@ -432,7 +420,7 @@ class AwesomeDialog {
   }
 }
 
-///Defines the header of [AwesomeDialog]
+///Defines the header of [SMDialog]
 enum DialogType {
   ///Dialog with information type header
   info,
@@ -456,7 +444,7 @@ enum DialogType {
   question
 }
 
-///Defines dismiss type of [AwesomeDialog]
+///Defines dismiss type of [SMDialog]
 enum DismissType {
   ///When dismissed by pressing BtnOk
   btnOk,

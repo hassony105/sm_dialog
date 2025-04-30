@@ -1,6 +1,6 @@
-# awesome_dialog_example
+# sm_dialog_example
 
-AwesomeDialogLibExample
+SMDialogLibExample
 
 ## Getting Started
 

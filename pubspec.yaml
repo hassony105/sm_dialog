@@ -1,8 +1,8 @@
-name: awesome_dialog
+name: sm_dialog
 description: >-
   Flutter package to show beautiful dialogs(INFO,QUESTION,WARNING,SUCCESS,ERROR) with animations as simply as possible.
 version: 3.2.1
-homepage: https://github.com/marcos930807/awesomeDialogs
+homepage: https://github.com/hassony105/sm_ialogs
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

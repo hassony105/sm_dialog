@@ -71,7 +71,7 @@
 
 ## [1.3.2] - 2/3/2021
 
-* Added Property buttonsTextStyle, to AwesomeDialog to easy customize built in buttons.
+* Added Property buttonsTextStyle, to SMDialog to easy customize built in buttons.
 
 ## [1.3.1] - 13/1/2021
 
@@ -97,7 +97,7 @@
 
 ## [1.1.3] - 27/06/2020
 
-* Added Property dismissOnBackKeyPress to control if AwesomeDialog is dismissible by back button
+* Added Property dismissOnBackKeyPress to control if SMDialog is dismissible by back button
 
 ## [1.1.2] - 9/06/2020
 
@@ -105,7 +105,7 @@
 
 ## [1.1.1] - 9/06/2020
 
-* Added Padding EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom) to AwesomeDialog to be aware of keyboard input
+* Added Padding EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom) to SMDialog to be aware of keyboard input
 
 ## [1.1.0] - 30/05/2020
 
