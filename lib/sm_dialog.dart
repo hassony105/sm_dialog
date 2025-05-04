@@ -56,6 +56,7 @@ class SMDialog {
     this.bodyHeaderDistance = 15.0,
     this.reverseBtnOrder = false,
     this.transitionAnimationDuration = const Duration(milliseconds: 300),
+    this.onClose,
   }) : assert(
           autoDismiss || onDismissCallback != null,
           'If autoDismiss is false, you must provide an onDismissCallback to pop the dialog',
@@ -199,6 +200,8 @@ class SMDialog {
   /// Defaults to `15.0`
   final double bodyHeaderDistance;
 
+  final VoidCallback? onClose;
+
   /// Used to make Ok button appear First than Cancel.
   ///
   /// Initialized to `false`
@@ -268,37 +271,34 @@ class SMDialog {
   }
 
   /// Returns the body of the dialog
-  Widget get buildDialog => WillPopScope(
-        onWillPop: _onWillPop,
-        child: _getDialogWidget(
-          child: VerticalStackDialog(
-            dialogBackgroundColor: dialogBackgroundColor,
-            borderSide: borderSide,
-            borderRadius: dialogBorderRadius,
-            header: _buildHeader,
-            title: title,
-            titleStyle: titleTextStyle,
-            desc: desc,
-            descStyle: descTextStyle,
-            body: body,
-            isDense: isDense,
-            alignment: alignment,
-            keyboardAware: keyboardAware,
-            width: width,
-            padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
-            bodyHeaderDistance: bodyHeaderDistance,
-            btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
-            btnCancel: btnCancel ?? (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
-            showCloseIcon: showCloseIcon,
-            onClose: () {
-              _dismissType = DismissType.topIcon;
-              dismiss.call();
-            },
-            closeIcon: closeIcon,
-            reverseBtnOrder: reverseBtnOrder,
-          ),
-        ),
-      );
+  Widget get buildDialog => _getDialogWidget(
+    child: VerticalStackDialog(
+      dialogBackgroundColor: dialogBackgroundColor,
+      borderSide: borderSide,
+      borderRadius: dialogBorderRadius,
+      header: _buildHeader,
+      title: title,
+      titleStyle: titleTextStyle,
+      desc: desc,
+      descStyle: descTextStyle,
+      body: body,
+      isDense: isDense,
+      alignment: alignment,
+      keyboardAware: keyboardAware,
+      width: width,
+      padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
+      bodyHeaderDistance: bodyHeaderDistance,
+      btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
+      btnCancel: btnCancel ?? (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
+      showCloseIcon: showCloseIcon,
+      onClose: () {
+        _dismissType = DismissType.topIcon;
+        dismiss.call();
+      },
+      closeIcon: closeIcon,
+      reverseBtnOrder: reverseBtnOrder,
+    ),
+  );
 
   Widget _getDialogWidget({
     required Widget child,
@@ -394,6 +394,10 @@ class SMDialog {
   /// Called to dismiss the dialog using the [Navigator.pop] method
   /// or calls the [onDismissCallback] function if [autoDismiss] is `false`
   void dismiss() {
+    if(onClose != null) {
+      onClose!.call();
+      return ;
+    }
     if (_onDismissCallbackCalled) return;
     if (autoDismiss) {
       Navigator.of(context, rootNavigator: useRootNavigator).pop();
