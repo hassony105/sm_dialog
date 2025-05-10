@@ -5,7 +5,7 @@ version: 3.2.1
 homepage: https://github.com/hassony105/sm_ialogs
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
   flutter:

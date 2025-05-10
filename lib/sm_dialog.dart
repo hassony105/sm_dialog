@@ -200,6 +200,7 @@ class SMDialog {
   /// Defaults to `15.0`
   final double bodyHeaderDistance;
 
+  /// method callback that responsible for closing dialog
   final VoidCallback? onClose;
 
   /// Used to make Ok button appear First than Cancel.
@@ -251,9 +252,12 @@ class SMDialog {
         ) =>
             _showAnimation(animation, secondaryAnimation, child),
         barrierColor: barrierColor ?? const Color(0x80000000),
-        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
       )..then<dynamic>(
-          (dynamic value) => _onDismissCallbackCalled ? null : onDismissCallback?.call(_dismissType),
+          (dynamic value) => _onDismissCallbackCalled
+              ? null
+              : onDismissCallback?.call(_dismissType),
         );
 
   /// Return the header of the dialog
@@ -272,43 +276,47 @@ class SMDialog {
 
   /// Returns the body of the dialog
   Widget get buildDialog => _getDialogWidget(
-    child: VerticalStackDialog(
-      dialogBackgroundColor: dialogBackgroundColor,
-      borderSide: borderSide,
-      borderRadius: dialogBorderRadius,
-      header: _buildHeader,
-      title: title,
-      titleStyle: titleTextStyle,
-      desc: desc,
-      descStyle: descTextStyle,
-      body: body,
-      isDense: isDense,
-      alignment: alignment,
-      keyboardAware: keyboardAware,
-      width: width,
-      padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
-      bodyHeaderDistance: bodyHeaderDistance,
-      btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
-      btnCancel: btnCancel ?? (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
-      showCloseIcon: showCloseIcon,
-      onClose: () {
-        _dismissType = DismissType.topIcon;
-        dismiss.call();
-      },
-      closeIcon: closeIcon,
-      reverseBtnOrder: reverseBtnOrder,
-    ),
-  );
+        child: VerticalStackDialog(
+          dialogBackgroundColor: dialogBackgroundColor,
+          borderSide: borderSide,
+          borderRadius: dialogBorderRadius,
+          header: _buildHeader,
+          title: title,
+          titleStyle: titleTextStyle,
+          desc: desc,
+          descStyle: descTextStyle,
+          body: body,
+          isDense: isDense,
+          alignment: alignment,
+          keyboardAware: keyboardAware,
+          width: width,
+          padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
+          bodyHeaderDistance: bodyHeaderDistance,
+          btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
+          btnCancel: btnCancel ??
+              (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
+          showCloseIcon: showCloseIcon,
+          onClose: () {
+            _dismissType = DismissType.topIcon;
+            dismiss.call();
+          },
+          closeIcon: closeIcon,
+          reverseBtnOrder: reverseBtnOrder,
+        ),
+      );
 
   Widget _getDialogWidget({
     required Widget child,
   }) {
     return enableEnterKey
-        ? RawKeyboardListener(
+        ? KeyboardListener(
             focusNode: FocusNode(),
             autofocus: true,
-            onKey: (RawKeyEvent event) {
-              if (event.isKeyPressed(LogicalKeyboardKey.enter) || event.isKeyPressed(LogicalKeyboardKey.numpadEnter)) {
+            onKeyEvent: (KeyEvent event) {
+              if (HardwareKeyboard.instance
+                      .isLogicalKeyPressed(LogicalKeyboardKey.enter) ||
+                  HardwareKeyboard.instance
+                      .isLogicalKeyPressed(LogicalKeyboardKey.numpadEnter)) {
                 if (btnOk == null && btnOkOnPress != null) {
                   _dismissType = DismissType.btnOk;
                   dismiss();
@@ -394,9 +402,9 @@ class SMDialog {
   /// Called to dismiss the dialog using the [Navigator.pop] method
   /// or calls the [onDismissCallback] function if [autoDismiss] is `false`
   void dismiss() {
-    if(onClose != null) {
+    if (onClose != null) {
       onClose!.call();
-      return ;
+      return;
     }
     if (_onDismissCallbackCalled) return;
     if (autoDismiss) {
@@ -407,21 +415,21 @@ class SMDialog {
   }
 
   /// Executes when `back button` pressed or `barrier dismissed`
-  Future<bool> _onWillPop() async {
-    //Determine whenever the dismiss is from Modal Barrier or BackButton
-    if (StackTrace.current.toString().contains('ModalBarrier')) {
-      if (dismissOnTouchOutside) {
-        _dismissType = DismissType.modalBarrier;
-        dismiss();
-      }
-    } else if (dismissOnBackKeyPress) {
-      //BackButton
-      _dismissType = DismissType.androidBackButton;
-      dismiss();
-    }
-
-    return false;
-  }
+// Future<bool> _onWillPop() async {
+//   //Determine whenever the dismiss is from Modal Barrier or BackButton
+//   if (StackTrace.current.toString().contains('ModalBarrier')) {
+//     if (dismissOnTouchOutside) {
+//       _dismissType = DismissType.modalBarrier;
+//       dismiss();
+//     }
+//   } else if (dismissOnBackKeyPress) {
+//     //BackButton
+//     _dismissType = DismissType.androidBackButton;
+//     dismiss();
+//   }
+//
+//   return false;
+// }
 }
 
 ///Defines the header of [SMDialog]
