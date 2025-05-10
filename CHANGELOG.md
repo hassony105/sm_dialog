@@ -1,3 +1,7 @@
+## [3.2.3] - 10/05/2024
+
+* Fix homepage url
+
 ## [3.2.2] - 10/05/2024
 
 * Make new release form forked package
