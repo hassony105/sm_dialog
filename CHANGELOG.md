@@ -1,3 +1,9 @@
+## [3.2.2] - 10/05/2024
+
+* Make new release form forked package
+* Some formating
+* Fix homepage url
+
 ## [3.2.1] - 30/04/2024
 
 * Upgrade dependencies.
