@@ -275,35 +275,38 @@ class SMDialog {
   }
 
   /// Returns the body of the dialog
-  Widget get buildDialog => _getDialogWidget(
-        child: VerticalStackDialog(
-          dialogBackgroundColor: dialogBackgroundColor,
-          borderSide: borderSide,
-          borderRadius: dialogBorderRadius,
-          header: _buildHeader,
-          title: title,
-          titleStyle: titleTextStyle,
-          desc: desc,
-          descStyle: descTextStyle,
-          body: body,
-          isDense: isDense,
-          alignment: alignment,
-          keyboardAware: keyboardAware,
-          width: width,
-          padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
-          bodyHeaderDistance: bodyHeaderDistance,
-          btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
-          btnCancel: btnCancel ??
-              (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
-          showCloseIcon: showCloseIcon,
-          onClose: () {
-            _dismissType = DismissType.topIcon;
-            dismiss.call();
-          },
-          closeIcon: closeIcon,
-          reverseBtnOrder: reverseBtnOrder,
+  Widget get buildDialog => GestureDetector(
+    onTap: () {},
+    child: _getDialogWidget(
+          child: VerticalStackDialog(
+            dialogBackgroundColor: dialogBackgroundColor,
+            borderSide: borderSide,
+            borderRadius: dialogBorderRadius,
+            header: _buildHeader,
+            title: title,
+            titleStyle: titleTextStyle,
+            desc: desc,
+            descStyle: descTextStyle,
+            body: body,
+            isDense: isDense,
+            alignment: alignment,
+            keyboardAware: keyboardAware,
+            width: width,
+            padding: padding ?? const EdgeInsets.only(left: 5, right: 5),
+            bodyHeaderDistance: bodyHeaderDistance,
+            btnOk: btnOk ?? (btnOkOnPress != null ? _buildFancyButtonOk : null),
+            btnCancel: btnCancel ??
+                (btnCancelOnPress != null ? _buildFancyButtonCancel : null),
+            showCloseIcon: showCloseIcon,
+            onClose: () {
+              _dismissType = DismissType.topIcon;
+              dismiss.call();
+            },
+            closeIcon: closeIcon,
+            reverseBtnOrder: reverseBtnOrder,
+          ),
         ),
-      );
+  );
 
   Widget _getDialogWidget({
     required Widget child,
